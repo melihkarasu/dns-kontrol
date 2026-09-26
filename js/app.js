@@ -27,7 +27,7 @@ function fallbackExecCopy(text, msg) {
   document.body.removeChild(ta);
 }
 
-const STORAGE_KEY = '***';
+const STORAGE_KEY = 'dns_sorgu_gecmisim_v1';
         let currentDomain = 'github.com';
         let currentType = 'A';
         let latestResults = [];
@@ -56,7 +56,7 @@ const STORAGE_KEY = '***';
         function setRecordType(type) {
           currentType = type;
           document.querySelectorAll('.type-btn').forEach(btn => {
-            btn.className = 'type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-white transition';
+            btn.className = 'type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition';
           });
           const activeBtn = document.getElementById('btn-type-' + type);
           if (activeBtn) {
@@ -101,14 +101,20 @@ const STORAGE_KEY = '***';
 
         async function fetchDohRecord(domain, type, provider) {
           const t0 = performance.now();
-          let endpoint = '';
-          
-          // Sunucu üzerindeki güvenli proxy endpointini kullan
+          // Standalone: DoH sağlayıcılarına doğrudan (CORS-açık), backend proxy yok
+          let d = (domain || '').trim().toLowerCase().replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
           const queryType = (type === 'ALL') ? 'ANY' : type;
-          const url = `/api/dns/lookup?domain=${encodeURIComponent(domain)}&type=${encodeURIComponent(queryType)}&provider=${provider}`;
+          let endpoint = '';
+          const dohHeaders = {};
+          if (provider === 'google') {
+            endpoint = `https://dns.google/resolve?name=${encodeURIComponent(d)}&type=${encodeURIComponent(queryType)}`;
+          } else {
+            endpoint = `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(d)}&type=${encodeURIComponent(queryType)}`;
+            dohHeaders['Accept'] = 'application/dns-json';
+          }
 
           try {
-            const res = await fetch(url);
+            const res = await fetch(endpoint, { headers: dohHeaders });
             const data = await res.json();
             const latency = Math.round(performance.now() - t0);
             return { success: true, latency: latency, data: data };
@@ -209,6 +215,7 @@ const STORAGE_KEY = '***';
 
           countBadge.innerText = `${answers.length} Kayıt`;
 
+          window.__renderedRecords = answers;
           tbody.innerHTML = answers.map((rec, idx) => {
             const typeName = RECORD_TYPES_MAP[rec.type] || ('TYPE' + rec.type);
             const dataClean = (rec.data || '').replace(/"/g, '');
@@ -216,15 +223,15 @@ const STORAGE_KEY = '***';
             return `
               <tr class="record-row hover:bg-mistral-cream transition">
                 <td class="py-3 pl-2">
-                  <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold text-[10px] font-mono">
+                  <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-700 font-bold text-[10px] font-mono">
                     ${typeName}
                   </span>
                 </td>
                 <td class="py-3 text-mistral-slate truncate max-w-[140px]">${rec.name}</td>
                 <td class="py-3 text-mistral-slate font-mono">${rec.TTL}s</td>
-                <td class="py-3 text-white font-bold select-all break-all">${dataClean}</td>
+                <td class="py-3 text-mistral-ink font-bold select-all break-all">${dataClean}</td>
                 <td class="py-3 text-right pr-2">
-                  <button onclick="copyRecordData('${dataClean.replace(/'/g, "\\\\'")}')" class="p-1 px-2 rounded-lg bg-white hover:bg-mistral-cream text-mistral-slate text-[10px] font-bold transition">
+                  <button onclick="copyRecordDataByIndex(${idx})" class="p-1 px-2 rounded-lg bg-white hover:bg-mistral-cream text-mistral-slate text-[10px] font-bold transition">
                     Kopyala
                   </button>
                 </td>
@@ -254,6 +261,14 @@ const STORAGE_KEY = '***';
               </div>
             </div>
           `).join('');
+        }
+
+        // Indeks-tabanli guvenli kopyalama (ozel karakterli TXT kayitlari HTML'i kiramaz)
+        function copyRecordDataByIndex(idx) {
+          const rec = (window.__renderedRecords || [])[idx];
+          if (!rec) return;
+          const dataClean = (rec.data || '').replace(/"/g, '');
+          copyRecordData(dataClean);
         }
 
         function copyRecordData(val) {
@@ -288,7 +303,7 @@ const STORAGE_KEY = '***';
             return;
           }
           grid.innerHTML = list.map(d => `
-            <button onclick="quickLookup('${d}')" class="p-2 rounded-xl bg-white hover:bg-mistral-cream border border-mistral-hairline text-xs font-mono text-cyan-300 truncate transition text-center shadow">
+            <button onclick="quickLookup('${d}')" class="p-2 rounded-xl bg-white hover:bg-mistral-cream border border-mistral-hairline text-xs font-mono text-cyan-700 truncate transition text-center shadow">
               ${d}
             </button>
           `).join('');

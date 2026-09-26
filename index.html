@@ -3,40 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS Kontrol & Ağ Teşhisi - Standalone</title>
+  <title>DNS Kontrol & Ağ Teşhisi</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fa520f' stroke='%2344403c' stroke-width='1.5'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='-apple-system,BlinkMacSystemFont,Inter,sans-serif' font-weight='800' font-size='13' letter-spacing='-0.5'%3EMK%3C/text%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="css/mistral-theme.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c1917' stroke='%2344403c' stroke-width='1.5'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='-apple-system,BlinkMacSystemFont,Inter,sans-serif' font-weight='800' font-size='13' letter-spacing='-0.5'%3EMK%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/style.css">
-  
+  <link rel="stylesheet" href="css/mistral-theme.css">
+  <link rel="stylesheet" href="css/app.css">
   <style>
-    :root { --mistral-ink: #1c1917; --mistral-slate: #78716c; --mistral-stone: #a8a29e; --mistral-hairline: #e7e5e4; --mistral-cream: #f5f5f4; --mistral-beige-deep: #d6d3d1; }
-    body { font-family: 'Inter', sans-serif; background-color: #fafaf9; color: var(--mistral-ink); }
-    h1, h2, .font-editorial { font-family: 'Newsreader', serif; }
+    :root {
+      --mistral-ink: #1c1917;
+      --mistral-slate: #78716c;
+      --mistral-stone: #a8a29e;
+      --mistral-hairline: #e7e5e4;
+      --mistral-cream: #f5f5f4;
+      --mistral-cream-deeper: #e7e5e4;
+      --mistral-cream-light: #fafaf9;
+      --mistral-beige-deep: #d6d3d1;
+    }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: #fafaf9; color: var(--mistral-ink); }
+    h1, h2, h3, h4, .font-editorial { font-family: 'Newsreader', serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .bg-mistral-cream { background-color: var(--mistral-cream); }
+    .bg-mistral-cream-deeper { background-color: var(--mistral-cream-deeper); }
+    .bg-mistral-cream-light { background-color: var(--mistral-cream-light); }
     .text-mistral-ink { color: var(--mistral-ink); }
     .text-mistral-slate { color: var(--mistral-slate); }
     .text-mistral-stone { color: var(--mistral-stone); }
-    .bg-mistral-cream { background-color: var(--mistral-cream); }
     .border-mistral-hairline { border-color: var(--mistral-hairline); }
-    .bg-mistral-canvas { background-color: #0f172a; }
+    .border-mistral-beige-deep { border-color: var(--mistral-beige-deep); }
+    .hover\\:bg-mistral-cream:hover { background-color: var(--mistral-cream) !important; }
+    .hover\\:text-mistral-ink:hover { color: var(--mistral-ink) !important; }
   </style>
 </head>
-<body class="p-4 md:p-8">
-  <div class="max-w-6xl mx-auto">
+<body class="p-4 sm:p-8">
+  <div class="max-w-7xl mx-auto">
     <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <div class="flex items-center gap-3">
-          <a href="https://github.com/melihkarasu" target="_blank" class="text-mistral-slate hover:text-teal-500 transition text-sm flex items-center gap-1">&larr; GitHub Profiline Dön</a>
-          <span class="text-mistral-stone">|</span>
-          <span class="px-2.5 py-0.5 rounded-full bg-teal-500/20 text-teal-600 text-xs font-semibold">Open Source Edition</span>
+        <div>
+          <div class="flex items-center gap-3">
+            
+          </div>
+          <h1 class="text-3xl font-extrabold tracking-tight mt-1 text-mistral-ink flex items-center gap-2">
+            <span>🌐</span> DNS Kontrol & Ağ Teşhisi
+          </h1>
+          <p class="text-mistral-slate text-sm mt-0.5">
+            Cloudflare & Google DoH (DNS over HTTPS) ile anlık DNS kayıtları, küresel yayılım, SPF/DMARC ve gecikme testi.
+          </p>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-normal font-editorial tracking-tight mt-1.5 text-mistral-ink flex items-center gap-2"><span>🌐</span> DNS Kontrol & Ağ Teşhisi</h1>
+
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-mistral-hairline text-xs text-mistral-slate">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span>DoH (DNS-over-HTTPS) Güvenli Protokol</span>
+        </div>
       </div>
-    </div>
-    
+
+      <!-- 1. DOMAIN VE KAYIT TÜRÜ ARAMA PANELİ -->
+      <div class="p-6 rounded-3xl bg-white border border-mistral-hairline shadow-xl mb-8 space-y-5">
+        
+        <!-- Arama Çubuğu -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-mistral-slate mb-1.5">
+            Sorgulanacak Alan Adı (Domain)
+          </label>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+              <input type="text" id="input-domain" value="github.com" placeholder="Örn: google.com, cloudflare.com, turkiye.gov.tr..." onkeyup="if(event.key==='Enter') executeDnsLookup()" class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-mistral-hairline text-sm font-mono text-mistral-ink placeholder-slate-500 focus:border-cyan-400 focus:outline-none">
+              <span class="absolute left-3.5 top-3.5 text-mistral-stone text-base">🌐</span>
+            </div>
+            <button onclick="executeDnsLookup()" id="btn-lookup" class="px-7 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black text-sm transition shadow-lg shadow-cyan-500/20 shrink-0 flex items-center justify-center gap-2">
+              <span>⚡</span> Kayıtları Çözümle
+            </button>
+          </div>
+        </div>
+
+        <!-- Hızlı Örnekler -->
+        <div class="flex flex-wrap items-center gap-2 text-xs pt-1">
+          <span class="text-mistral-stone text-[11px]">Hızlı Örnekler:</span>
+          <button onclick="quickLookup('github.com')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">github.com</button>
+          <button onclick="quickLookup('google.com')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">google.com</button>
+          <button onclick="quickLookup('cloudflare.com')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">cloudflare.com</button>
+          <button onclick="quickLookup('turkiye.gov.tr')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">turkiye.gov.tr</button>
+          <button onclick="quickLookup('wikipedia.org')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">wikipedia.org</button>
+        </div>
+
+        <!-- Kayıt Türü Sekmeleri (A, AAAA, MX, TXT, NS, SOA, ALL) -->
+        <div class="pt-3 border-t border-mistral-hairline flex flex-wrap gap-2">
+          <button onclick="setRecordType('A')" id="btn-type-A" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-500 text-slate-950 transition shadow">A (IPv4)</button>
+          <button onclick="setRecordType('AAAA')" id="btn-type-AAAA" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition">AAAA (IPv6)</button>
+          <button onclick="setRecordType('CNAME')" id="btn-type-CNAME" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition">CNAME</button>
+          <button onclick="setRecordType('MX')" id="btn-type-MX" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition">MX (Mail)</button>
+          <button onclick="setRecordType('TXT')" id="btn-type-TXT" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition">TXT (SPF/DMARC)</button>
+          <button onclick="setRecordType('NS')" id="btn-type-NS" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition">NS (Nameserver)</button>
+          <button onclick="setRecordType('SOA')" id="btn-type-SOA" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition">SOA</button>
+          <button onclick="setRecordType('ALL')" id="btn-type-ALL" class="type-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-mistral-hairline text-mistral-slate hover:text-mistral-ink transition">Kapsamlı Özet</button>
+        </div>
+
+      </div>
+
+      <div id="loading-spinner" class="hidden py-16 text-center text-mistral-slate text-sm flex flex-col items-center gap-3">
+        <div class="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
+        <span>Cloudflare ve Google DoH sunucularından DNS kayıtları çözümleniyor...</span>
+      </div>
+
+      <!-- 2. TEŞHİS VE ÖZET KARTLARI -->
+      <div id="dns-results-area" class="space-y-8">
+        
+        <!-- Üst Metrikler (Gecikme, DNSSEC, Güvenlik) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl bg-white border border-mistral-hairline shadow">
+            <span class="text-[10px] text-mistral-slate uppercase font-bold">Cloudflare DoH Çözümleme</span>
+            <div class="text-2xl font-black text-cyan-400 font-mono mt-1" id="val-cf-latency">-- ms</div>
+            <p class="text-[11px] text-mistral-slate mt-1">1.1.1.1 Anycast Güvenli DNS</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white border border-mistral-hairline shadow">
+            <span class="text-[10px] text-mistral-slate uppercase font-bold">Google DoH Çözümleme</span>
+            <div class="text-2xl font-black text-blue-400 font-mono mt-1" id="val-google-latency">-- ms</div>
+            <p class="text-[11px] text-mistral-slate mt-1">8.8.8.8 Global DNS Resolver</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white border border-mistral-hairline shadow">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] text-mistral-slate uppercase font-bold">DNSSEC Durumu</span>
+              <span id="badge-dnssec" class="px-2 py-0.5 rounded text-[10px] font-bold bg-mistral-cream text-mistral-slate">--</span>
+            </div>
+            <div class="text-sm font-bold text-mistral-ink mt-1" id="val-dnssec-text">Kontrol ediliyor...</div>
+            <p class="text-[11px] text-mistral-slate mt-1">Kriptografik DNS doğrulama bayrağı</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white border border-mistral-hairline shadow">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] text-mistral-slate uppercase font-bold">E-Posta Güvenliği</span>
+              <span id="badge-email-sec" class="px-2 py-0.5 rounded text-[10px] font-bold bg-mistral-cream text-mistral-slate">--</span>
+            </div>
+            <div class="text-xs font-bold text-mistral-ink mt-1" id="val-email-sec-text">SPF / DMARC Analizi</div>
+            <p class="text-[11px] text-mistral-slate mt-1" id="val-email-sec-sub">Sahte e-posta koruması</p>
+          </div>
+        </div>
+
+        <!-- Kayıtlar Tablosu -->
+        <div class="p-6 rounded-3xl bg-white border border-mistral-hairline shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-mistral-ink flex items-center gap-2">
+                <span>📋</span> Çözümlenen DNS Kayıtları
+              </h3>
+              <p class="text-mistral-slate text-xs mt-0.5" id="records-table-sub">Domain ve kayıt tipi dökümü</p>
+            </div>
+            <span class="px-3 py-1 rounded-xl bg-white border border-mistral-hairline text-xs font-mono font-bold text-cyan-700" id="records-count-badge">
+              0 Kayıt
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead>
+                <tr class="border-b border-mistral-hairline text-mistral-slate">
+                  <th class="pb-2.5 pl-2 font-semibold">Tür</th>
+                  <th class="pb-2.5 font-semibold">Alan Adı (Host)</th>
+                  <th class="pb-2.5 font-semibold">TTL</th>
+                  <th class="pb-2.5 font-semibold">Çözümlenen Değer / Hedef (Data)</th>
+                  <th class="pb-2.5 text-right pr-2">İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="dns-records-tbody" class="divide-y divide-mistral-hairline">
+                <!-- JS ile satırlar -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. KÜRESEL DNS YAYILIM TESTİ (PROPAGATION SIMULATOR) -->
+        <div class="p-6 rounded-3xl bg-white border border-mistral-hairline shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-mistral-ink flex items-center gap-2">
+                <span>🌍</span> Küresel DNS Çözümleme Ağı
+              </h3>
+              <p class="text-mistral-slate text-xs mt-0.5">Dünya genelindeki popüler resolver düğümlerinde A kaydı yayılım durumu:</p>
+            </div>
+            <span class="text-xs text-mistral-slate font-mono">Global Anycast</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1" id="global-nodes-grid">
+            <!-- JS ile doldurulur -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 4. SON SORGULANAN DOMAINLER (RECENT LOOKUPS) -->
+      <div class="mt-14 pt-8 border-t border-mistral-hairline space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-mistral-ink flex items-center gap-2">
+              <span>📚</span> Son Sorgulanan Alan Adları
+            </h3>
+            <p class="text-mistral-slate text-xs">Tek tıkla eski analizlerinize geri dönün.</p>
+          </div>
+          <button onclick="clearRecentLookups()" class="text-xs text-rose-400 hover:underline">Geçmişi Temizle</button>
+        </div>
+
+        <div id="recent-lookups-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          <!-- JS ile doldurulur -->
+        </div>
+      </div>
+
+      <!-- Toast Bildirimi -->
+      <div id="dns-toast" class="hidden fixed bottom-6 right-6 py-2.5 px-4 rounded-xl bg-cyan-500 text-slate-950 font-black text-xs shadow-2xl transition z-50"></div>
+
+      <!-- İstemci Mantığı -->
   </div>
+
+  <footer class="mt-16 text-center text-xs text-mistral-stone border-t border-mistral-hairline pt-6">
+    <p>Açık Kaynak Standalone Sürüm • Veriler: <a href="https://developers.cloudflare.com/1.1.1.1/encryption/dns-over-https/" target="_blank" rel="noopener" class="underline hover:text-mistral-ink">Cloudflare DoH</a> + <a href="https://dns.google/" target="_blank" rel="noopener" class="underline hover:text-mistral-ink">Google DoH</a></p>
+  </footer>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
