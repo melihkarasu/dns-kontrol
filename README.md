@@ -29,3 +29,10 @@ MIT Lisansı altında açık kaynak olarak paylaşılmıştır.
 
 ---
 Daha fazla açık kaynak mikro uygulama için [GitHub profilimi](https://github.com/melihkarasu) ziyaret edebilirsiniz.
+
+
+---
+
+## 🧩 Proje Hakkında
+
+Bu uygulama, [VibeCodedApps](https://github.com/melihkarasu/VibeCodedApps) mikro uygulama koleksiyonunun bir parçası olarak üretilmiş açık kaynak standalone sürümdür.
